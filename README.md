@@ -123,9 +123,15 @@ share a line, so the countdown they share is stated once. It goes quiet grey
 below 75%, blue above it, red above 90%.
 
 With two accounts signed in, each gets its own block, read from that account's
-own config:
+own config. Claude Code keeps the signed-in account in its config directory, so a
+second account is a second directory: start a session with
+`CLAUDE_CONFIG_DIR=~/.claude-ops claude`, log in there once, and every session
+started that way spends that account while the rest stay on your default one.
 
-<img src="docs/rail-accounts-light.png" width="303" alt="Two accounts' plan usage in the light palette, with each session tagged by account">
+![Two accounts: each session tagged dev or ops, with a usage block per account](docs/rail-accounts.png)
+
+Which account a session runs as is read from its environment in `/proc`, so
+this part is Linux-only; elsewhere every session counts as the default account.
 
 By default these come from Claude Code's own cache, and cc-rail only reads it.
 Claude Code refills that cache when a session opens `/usage`, not as it works,
