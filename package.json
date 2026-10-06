@@ -1,0 +1,21 @@
+{
+  "name": "cc-rail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A left rail for your Claude Code sessions, hosted on tmux.",
+  "bin": {
+    "cc-rail": "./bin/cc-rail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Launchable-AI/claude-code-rail.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

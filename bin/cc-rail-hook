@@ -1,0 +1,15 @@
+#!/bin/sh
+# Claude Code hook shim for cc-rail.
+#
+# Deliberately a shell script, not node: this runs on the hot path of every
+# tool call, so it must cost single-digit milliseconds. It only spools the
+# event; the cc-rail daemon does the folding.
+#
+# Each event is written to its own file and renamed into place, so concurrent
+# hooks from several sessions can never interleave inside one file.
+d="${CC_RAIL_HOME:-$HOME/.cc-rail}/state/spool"
+mkdir -p "$d" 2>/dev/null || exit 0
+f="$d/$(date +%s%N)-$$"
+{ printf '%s\n%s\n' "$1" "${TMUX_PANE:-}"; cat; } > "$f.part" 2>/dev/null && mv "$f.part" "$f.evt" 2>/dev/null
+# Never block or fail a turn because of cc-rail.
+exit 0

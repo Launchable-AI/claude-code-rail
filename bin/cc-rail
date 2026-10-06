@@ -1,0 +1,12 @@
+#!/bin/sh
+# cc-rail launcher. Resolves node explicitly, because a tmux pane started from a
+# bare shell may not have an nvm-managed node on PATH.
+DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+NODE="$CC_RAIL_NODE"
+[ -z "$NODE" ] && [ -r "$DIR/.nodepath" ] && NODE=$(cat "$DIR/.nodepath")
+[ -z "$NODE" ] && NODE=$(command -v node 2>/dev/null)
+if [ -z "$NODE" ] || [ ! -x "$NODE" ]; then
+  echo "cc-rail: could not find node (set CC_RAIL_NODE or write $DIR/.nodepath)" >&2
+  exit 127
+fi
+exec "$NODE" "$DIR/src/cli.js" "$@"

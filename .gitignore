@@ -1,0 +1,4 @@
+# Absolute path to this machine's node interpreter, written by `cc-rail up`.
+.nodepath
+node_modules/
+*.log
